@@ -14,10 +14,12 @@ let
     pkgs = with nixpkgs; rec {
         clang = nixpkgs.clang_9;
         llvm = nixpkgs.llvm_9;
-        openmp = nixpkgs.llvmPackages.openmp;
+        llvmPackages = nixpkgs.llvmPackages_9;
+        openmp = llvmPackages_9.openmp;
+        libclang = llvmPackages_9.libclang;
         clangStdenv = nixpkgs.overrideCC nixpkgs.clangStdenv clang;
 
-        cudatoolkit = nixpkgs.cudaPackages.cudatoolkit_10;
+        cudatoolkit = nixpkgs.cudaPackages.cudatoolkit_9;
 
         hipsycl = callPackage ./dependencies/hipSYCL.nix {};
     };

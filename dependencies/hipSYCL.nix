@@ -7,7 +7,8 @@ llvm,
 cudatoolkit,
 python3,
 boost,
-openmp
+openmp,
+libclang
 }:
 
 clangStdenv.mkDerivation rec {
@@ -26,7 +27,8 @@ clangStdenv.mkDerivation rec {
   ];
   enableParallelBuilding = false;
 
-  buildInputs = [ cmake clang llvm openmp cudatoolkit python3 boost ];
+  #buildInputs = [ cmake clang llvm openmp cudatoolkit python3 boost ];
+  buildInputs = [ cmake clang llvm openmp libclang python3 boost ];
 
 
   postPatch = ''
