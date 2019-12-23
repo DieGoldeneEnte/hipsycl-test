@@ -1,37 +1,50 @@
 {
 clangStdenv,
-fetchgit,
+lib, fetchgit,
 cmake,
 clang,
 llvm,
-cudatoolkit,
+cudaSupport ? false, cudatoolkit,
 python3,
 boost,
 openmp,
-libclang
+clangInclude
 }:
 
 clangStdenv.mkDerivation rec {
   pname = "hypSYCL";
-  version = "0.8.0-rc1";
+  version = "0.8.0";
 
   src = fetchgit {
-    url = "https://github.com/illuhad/hipSYCL";
-    rev = "v${version}";
-    sha256 = "1z5zvry3wl55a59s5gzq1qppayqsk49y09q68yf51g47ldzkgrqv";
+#    url = "https://github.com/illuhad/hipSYCL";
+#    rev = "v${version}";
+    url = "https://github.com/DieGoldeneEnte/hipSYCL";
+    rev = "5d0ba2c401e35469dd0b73b7f200e1ea75bab300";
+    sha256 = "0k9fgcyabcrj97imjl36l374zy87ck013z7iflwlw4c5czksgadj";
     fetchSubmodules = true;
   };
 
-  cmakeFlags = [
-    "-DCLANG_INCLUDE_PATH=${clang}/resource-root/include"
-  ];
-  enableParallelBuilding = false;
+#  src = ../hipSYCL;
 
-  #buildInputs = [ cmake clang llvm openmp cudatoolkit python3 boost ];
-  buildInputs = [ cmake clang llvm openmp libclang python3 boost ];
+  cmakeFlags = [
+    "-DCLANG_INCLUDE_PATH=${clangInclude}/include"
+  ] ++ lib.optional cudaSupport "-DCUDA:TOOLKIT_ROOT_DIR=${cudatoolkit}";
+
+
+  enableParallelBuilding = true;
+  dontStrip = true;
+
+  buildInputs = [
+    cmake
+    clang
+    llvm
+    openmp
+    python3
+    boost
+  ] ++ lib.optional cudaSupport cudatoolkit;
 
 
   postPatch = ''
-    patchShebangs /build/hipSYCL/bin/syclcc-clang
+    patchShebangs /build
   '';
 }

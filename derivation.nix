@@ -1,15 +1,30 @@
-  { stdenv, hipsycl }:
+{
+clangStdenv,
+lib,
+cudaSupport ? false, cudatoolkit,
+hipsycl,
+openmp
+}:
 
-stdenv.mkDerivation {
-    name = "test";
-    src = ./.;
+clangStdenv.mkDerivation {
+  name = "test";
+  src = ./src;
 
-    buildInputs = [ hipsycl ];
+  buildInputs = [
+    hipsycl
+    openmp
+  ] ++ lib.optional cudaSupport [
+    cudatoolkit
+  ];
 
-    buildPhase = "echo $PWD";
+  nativeBuildInputs = [ hipsycl ];
 
-    installPhase = ''
-        mkdir -p $out
-        touch $out/test
-    '';
+  buildPhase = ''
+    syclcc-clang --hipsycl-gpu-arch=sm_30 -o hipsycl_test test.cpp
+  '';
+
+  installPhase = ''
+    mkdir -p $out
+    mv hipsycl_test $out/
+  '';
 }
