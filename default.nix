@@ -12,6 +12,6 @@ let
   };
 in
   [
-    amd-hipsycl-test
+    #amd-hipsycl-test
     hipsycl-test
   ]

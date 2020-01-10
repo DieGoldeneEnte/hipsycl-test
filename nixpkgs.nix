@@ -4,7 +4,7 @@ let
     name = "own-nixos-rocm-20220-01-07";
     url = https://github.com/DieGoldeneEnte/nixos-rocm/;
     ref = "hipsycl";
-    rev = "7321c0a265637d0edf4a144bc4f4398355a28991";
+    rev = "f77a4d76cb5d433314f6c16e9d04e4b58f395bb9";
   });
   #nixos-rocm = import ../nixos-rocm;
 
