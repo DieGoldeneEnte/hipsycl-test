@@ -8,11 +8,20 @@ let
   });
   #nixos-rocm = import ../nixos-rocm;
 
+#  nixpkgs = import (builtins.fetchGit {
+#    name = "nixos-master-2020-01-07";
+#    url = https://github.com/nixos/nixpkgs/;
+#    ref = "master";
+#    rev = "8a6baaecb5b55021491eca4e3e5a5ab49ae6049f";
+#  }) {
+
+#  nixpkgs = import ../nixpkgs {
+
   nixpkgs = import (builtins.fetchGit {
-    name = "nixos-master-2020-01-07";
-    url = https://github.com/nixos/nixpkgs/;
+    name = "nixos-master-2020-01-10";
+    url = https://github.com/DieGoldeneEnte/nixpkgs/;
     ref = "master";
-    rev = "8a6baaecb5b55021491eca4e3e5a5ab49ae6049f";
+    rev = "aef8741cbcc34800a36c5f939d729b8e65ca0685";
   }) {
     overlays = [ nixos-rocm ];
     config = {
