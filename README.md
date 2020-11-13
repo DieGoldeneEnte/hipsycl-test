@@ -1,3 +1,5 @@
+**I have a working version of hipSYCL+tests (not yet public) so there is no reason to use this** if you want it before I get around to cleanup/test just ping me :)
+
 This is just a little project to get an environment with
 [hipSYCL](https://github.com/illuhad/hipSYCL) to work.
 
